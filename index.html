@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta Especial</title>
+    <style>
+        body { background-color: #4B0082; font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .envelope-wrapper { background-color: #310062; padding: 40px; border-radius: 12px; text-align: center; cursor: pointer; color: white; width: 100%; max-width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .card-container { display: none; background: #fdfbf7; padding: 30px; border-radius: 12px; width: 100%; max-width: 500px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+        .photo { width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; }
+        h1 { color: #333; font-size: 1.5rem; }
+        p { color: #555; margin: 10px 0; }
+        .music-container { margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="envelope-wrapper" id="envelope" onclick="openCard()">
+        <h2>💌 Toca aquí para abrir</h2>
+    </div>
+
+    <div class="card-container" id="card">
+        <img src="foto.jpg" class="photo" alt="Foto">
+        <h1>¡Hola!</h1>
+        <p>Esta es una carta especial para ti.</p>
+        <p>Espero que te guste mucho este detalle.</p>
+        
+        <div class="music-container">
+            <!-- Aquí irá tu música -->
+            <p>🎵 (Aquí sonará tu canción)</p>
+        </div>
+    </div>
+
+    <script>
+        function openCard() {
+            document.getElementById('envelope').style.display = 'none';
+            document.getElementById('card').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
