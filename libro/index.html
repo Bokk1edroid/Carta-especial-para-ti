@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuestro Libro Interactivo 💖</title>
-    <!-- Importando tipografía estilo Kuromi / Gótica tierna (Delius / Chewy / Patrick Hand) -->
+    <!-- Importando tipografía estilo Kuromi / Gótica tierna -->
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
     <style>
         body {
@@ -90,6 +90,13 @@
             transition: transform 0.1s;
             margin: 15px 0;
         }
+        .error-msg {
+            color: #ffb3da;
+            font-size: 0.95rem;
+            margin-top: 5px;
+            min-height: 24px;
+            text-shadow: 0 0 5px rgba(255,179,218,0.4);
+        }
         @keyframes floatUp {
             0% { transform: translateY(0) scale(0.5); opacity: 1; }
             100% { transform: translateY(-300px) scale(1.5); opacity: 0; }
@@ -111,6 +118,7 @@
         <p style="text-align: center;">¿Cuál es nuestra fecha especial? (Formato: DD-MM)</p>
         <input type="text" id="resp1" placeholder="DD-MM">
         <br><button onclick="validarTexto(1, '16-09', 'music1')">Abrir Carta 1 💌</button>
+        <div id="err1" class="error-msg"></div>
     </div>
     <div id="p2" class="page">
         <img src="foto1.jpg" alt="Carta 1" class="card-img">
@@ -125,6 +133,7 @@
         <p style="text-align: center;">¿Cuántos meses llevamos sumando momentos bonitos?</p>
         <input type="text" id="resp2" placeholder="Número de meses...">
         <br><button onclick="validarLibre(2, 'music2')">Abrir Carta 2 🔓</button>
+        <div id="err2" class="error-msg"></div>
     </div>
     <div id="p4" class="page">
         <img src="foto2.jpg" alt="Carta 2" class="card-img">
@@ -139,6 +148,7 @@
         <p style="text-align: center;">Ordena estas letras para descubrir la canción que nos representa:<br><b style="color:#d8b4fe; font-size:1.1rem;">L - L - F - A - C - I - N - E - T - N - G - I - P - L - O - V - E</b></p>
         <input type="text" id="resp3" placeholder="Nombre de la canción...">
         <br><button onclick="validarTexto(3, 'cant help falling in love', 'music3')">Abrir Carta 3 🔓</button>
+        <div id="err3" class="error-msg"></div>
     </div>
     <div id="p6" class="page">
         <img src="foto3.jpg" alt="Carta 3" class="card-img">
@@ -153,6 +163,7 @@
         <p style="text-align: center;">¿En qué fecha hicimos nuestra primera llamada? (Formato: DD-MM)</p>
         <input type="text" id="resp4" placeholder="DD-MM">
         <br><button onclick="validarTexto(4, '15-08', 'music4')">Abrir Carta 4 🔓</button>
+        <div id="err4" class="error-msg"></div>
     </div>
     <div id="p8" class="page">
         <img src="foto4.jpg" alt="Carta 4" class="card-img">
@@ -161,12 +172,13 @@
         <button onclick="siguiente(8, 9, 'music4')">Siguiente Reto ➔</button>
     </div>
 
-    <!-- RETO 5 (LIBRE Y SEGURO) -->
+    <!-- RETO 5 -->
     <div id="p9" class="page">
         <h1>Reto 5: Nuestro Apodo 🐾</h1>
         <p style="text-align: center;">¿Cuál es la palabra o apodo con el que más nos consentimos?</p>
         <input type="text" id="resp5" placeholder="Escribe la palabra...">
         <br><button onclick="validarLibre(5, 'music5')">Abrir Carta 5 🔓</button>
+        <div id="err5" class="error-msg"></div>
     </div>
     <div id="p10" class="page">
         <img src="foto5.jpg" alt="Carta 5" class="card-img">
@@ -181,6 +193,7 @@
         <p style="text-align: center;">¿Qué lugar te gustaría visitar conmigo algún día?</p>
         <input type="text" id="resp6" placeholder="Lugar especial...">
         <br><button onclick="validarLibre(6, 'music6')">Abrir Carta 6 🔓</button>
+        <div id="err6" class="error-msg"></div>
     </div>
     <div id="p12" class="page">
         <img src="foto6.jpg" alt="Carta 6" class="card-img">
@@ -195,6 +208,7 @@
         <p style="text-align: center;">¿Qué es lo que más te hace sonreír de nosotros?</p>
         <input type="text" id="resp7" placeholder="Escribe tu respuesta...">
         <br><button onclick="validarLibre(7, 'music7')">Abrir Carta 7 🔓</button>
+        <div id="err7" class="error-msg"></div>
     </div>
     <div id="p14" class="page">
         <img src="foto7.jpg" alt="Carta 7" class="card-img">
@@ -209,6 +223,7 @@
         <p style="text-align: center;">¿Cuál es tu foto o recuerdo favorito de los dos?</p>
         <input type="text" id="resp8" placeholder="Escribe el recuerdo...">
         <br><button onclick="validarLibre(8, 'music8')">Abrir Carta 8 🔓</button>
+        <div id="err8" class="error-msg"></div>
     </div>
     <div id="p16" class="page">
         <img src="foto8.jpg" alt="Carta 8" class="card-img">
@@ -223,6 +238,7 @@
         <p style="text-align: center;">¿Cuál es una pequeña cosa que hago y que te hace sentir bien?</p>
         <input type="text" id="resp9" placeholder="Escribe aquí...">
         <br><button onclick="validarLibre(9, 'music9')">Abrir Carta 9 🔓</button>
+        <div id="err9" class="error-msg"></div>
     </div>
     <div id="p18" class="page">
         <img src="foto9.jpg" alt="Carta 9" class="card-img">
@@ -237,6 +253,7 @@
         <p style="text-align: center;">Escribe una pequeña promesa para nuestro futuro:</p>
         <input type="text" id="resp10" placeholder="Nuestra promesa...">
         <br><button onclick="validarLibre(10, 'music10')">Abrir Carta 10 🔓</button>
+        <div id="err10" class="error-msg"></div>
     </div>
     <div id="p20" class="page">
         <img src="foto10.jpg" alt="Carta 10" class="card-img">
@@ -259,13 +276,14 @@
         <button onclick="siguiente(22, 23, 'music11')">Último Desafío ➔</button>
     </div>
 
-    <!-- RETO 12 (CON PISTA) -->
+    <!-- RETO 12 -->
     <div id="p23" class="page">
         <h1>Reto 12: La Clave Final 👑</h1>
         <p style="text-align: center;">Escribe las palabras mágicas para abrir tu gran carta de regalo:</p>
         <p style="text-align: center; font-size: 0.9rem; color: #ffb3da;">💡 Pista: Lo que más te digo siempre... (Dos palabras)</p>
         <input type="text" id="resp12" placeholder="Escribe aquí...">
         <br><button onclick="validarTexto(12, 'te amo', 'music12')">Abrir Gran Carta Final 💌</button>
+        <div id="err12" class="error-msg"></div>
     </div>
     <div id="p24" class="page">
         <img src="foto12.jpg" alt="Carta Final" class="card-img">
@@ -279,23 +297,27 @@
 
         function validarTexto(num, respuestaCorrecta, idAudio) {
             let input = document.getElementById('resp'+num).value.toLowerCase().trim();
+            let errDiv = document.getElementById('err'+num);
             if(input === respuestaCorrecta) {
+                errDiv.innerText = "";
                 let actual = (num * 2) - 1;
                 let siguientePagina = actual + 1;
                 siguiente(actual, siguientePagina, idAudio);
             } else {
-                alert("¡Mmm, casi! Revisa bien la respuesta 🧐");
+                errDiv.innerText = "¡Mmm, casi! Revisa bien la respuesta 🧐🖤";
             }
         }
 
         function validarLibre(num, idAudio) {
             let input = document.getElementById('resp'+num).value.trim();
+            let errDiv = document.getElementById('err'+num);
             if(input !== "") {
+                errDiv.innerText = "";
                 let actual = (num * 2) - 1;
                 let siguientePagina = actual + 1;
                 siguiente(actual, siguientePagina, idAudio);
             } else {
-                alert("Escribe algo tierno para continuar 💌");
+                errDiv.innerText = "Escribe algo tierno para continuar 💌";
             }
         }
 
