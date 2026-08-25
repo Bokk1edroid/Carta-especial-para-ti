@@ -113,18 +113,21 @@
         <button onclick="siguiente(8, 9, 'music4')">Siguiente Reto ➔</button>
     </div>
 
-    <!-- RETO 5 (SOPA DE LETRAS) -->
+    <!-- RETO 5 (BURBUJAS QUE REVELAN LA IMAGEN) -->
     <div id="p9" class="page">
-        <h1>Reto 5: Sopa de Letras 🔍</h1>
-        <p style="text-align: center;">Encuentra las palabras de amor escondidas:<br><b>AMOR, MIVIDA, MICIELO, MIANGELITO, MINIÑA</b></p>
-        <div class="word-search">
-            A M O R X M<br>
-            M I V I D A<br>
-            M I C I E L O<br>
-            M I A N G E L I T O<br>
-            M I N I Ñ A
+        <h1>Reto 5: Aplasta las Burbujas 🫧</h1>
+        <p style="text-align: center;">¡Revienta todas las burbujas para despejar y revelar la imagen oculta!</p>
+        <p id="bubbleCount" style="text-align: center; color: #ff69b4; margin: 5px 0;">Restantes: 8</p>
+        <div class="bubble-grid" id="bubbleGrid">
+            <div class="bubble" onclick="reventarBurbuja(this)">💜</div>
+            <div class="bubble" onclick="reventarBurbuja(this)">🖤</div>
+            <div class="bubble" onclick="reventarBurbuja(this)">✨</div>
+            <div class="bubble" onclick="reventarBurbuja(this)">💜</div>
+            <div class="bubble" onclick="reventarBurbuja(this)">🖤</div>
+            <div class="bubble" onclick="reventarBurbuja(this)">✨</div>
+            <div class="bubble" onclick="reventarBurbuja(this)">💜</div>
+            <div class="bubble" onclick="reventarBurbuja(this)">🖤</div>
         </div>
-        <button onclick="pasarDirecto(9, 10, 'music5')">¡Las encontré todas! 🔓</button>
     </div>
     <div id="p10" class="page">
         <img src="foto5.jpg" alt="Carta 5" class="card-img">
@@ -132,6 +135,7 @@
         <p>Escribe aquí tu quinta carta...</p>
         <button onclick="siguiente(10, 11, 'music5')">Siguiente Reto ➔</button>
     </div>
+
 
     <!-- RETO 6 -->
     <div id="p11" class="page">
