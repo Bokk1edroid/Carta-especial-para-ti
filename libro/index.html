@@ -27,6 +27,19 @@
         .pinata { font-size: 4rem; cursor: pointer; user-select: none; transition: transform 0.1s; }
         .rhythm-heart { font-size: 3.5rem; cursor: pointer; display: inline-block; animation: pulse 1s infinite alternate; }
         @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.2); } }
+
+        /* LLUVIA DE CORAZONES PIÑATA */
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-300px) scale(1.5); opacity: 0; }
+        }
+        .heart-particle {
+            position: fixed;
+            font-size: 2rem;
+            animation: floatUp 1.5s ease-out forwards;
+            z-index: 9999;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -47,7 +60,7 @@
     <!-- RETO 1 -->
     <div id="p1" class="page active">
         <h1>Reto 1: Fecha Especial 🗝️</h1>
-        <p style="text-align: center;">¿Cuál estuestra fecha especial? (Formato: DD-MM)</p>
+        <p style="text-align: center;">¿Cuál es nuestra fecha especial? (Formato: DD-MM)</p>
         <input type="text" id="resp1" placeholder="DD-MM">
         <br><button onclick="validarTexto(1, '16-09', 'music1')">Abrir Carta 1 💌</button>
     </div>
@@ -75,9 +88,9 @@
     <!-- RETO 3 -->
     <div id="p5" class="page">
         <h1>Reto 3: Letras Desordenadas 🎶</h1>
-        <p style="text-align: center;">Ordena estas letras para descubrir la canción que nos representa:<br><b style="color:#d8b4fe; font-size:1.2rem;">H - O - N - E - Y - B - E - E</b></p>
+        <p style="text-align: center;">Ordena estas letras para descubrir la canción que nos representa:<br><b style="color:#d8b4fe; font-size:1.1rem;">L - L - F - A - C - I - N - E - T - N - G - I - P - L - O - V - E</b></p>
         <input type="text" id="resp3" placeholder="Nombre de la canción...">
-        <br><button onclick="validarTexto(3, 'honeybee', 'music3')">Abrir Carta 3 🔓</button>
+        <br><button onclick="validarTexto(3, 'cant help falling in love', 'music3')">Abrir Carta 3 🔓</button>
     </div>
     <div id="p6" class="page">
         <img src="foto3.jpg" alt="Carta 3" class="card-img">
@@ -100,7 +113,7 @@
         <button onclick="siguiente(8, 9, 'music4')">Siguiente Reto ➔</button>
     </div>
 
-    <!-- RETO 5 -->
+    <!-- RETO 5 (SOPA DE LETRAS) -->
     <div id="p9" class="page">
         <h1>Reto 5: Sopa de Letras 🔍</h1>
         <p style="text-align: center;">Encuentra las palabras de amor escondidas:<br><b>AMOR, MIVIDA, MICIELO, MIANGELITO, MINIÑA</b></p>
@@ -193,7 +206,7 @@
         <button onclick="siguiente(20, 21, 'music10')">Siguiente Reto ➔</button>
     </div>
 
-    <!-- RETO 11 -->
+    <!-- RETO 11 (PIÑATA CON CORAZONES) -->
     <div id="p21" class="page">
         <h1>Reto 11: La Piñata Corazón 🪅</h1>
         <p style="text-align: center;">Toca la piñata 3 veces para romperla y ver qué hay dentro:</p>
@@ -245,10 +258,9 @@ Aquí pones el texto final más emotivo y bonito de todos para cerrar esta sorpr
             reproducir(idAudio);
         }
 
-        // FUNCIÓN QUE CREA EL MODAL DE KUROMI DINÁMICAMENTE
+        // MODAL DE KUROMI DINÁMICO
         function mostrarErrorKuromi() {
-            if(document.getElementById('kuromiModal')) return; // Evita duplicados si hace clic rápido
-            
+            if(document.getElementById('kuromiModal')) return; 
             var modalHTML = `
                 <div id="kuromiModal" class="kuromi-alert">
                     <div class="kuromi-box">
@@ -263,9 +275,7 @@ Aquí pones el texto final más emotivo y bonito de todos para cerrar esta sorpr
 
         function cerrarKuromi() {
             var modal = document.getElementById('kuromiModal');
-            if(modal) {
-                modal.remove();
-            }
+            if(modal) { modal.remove(); }
         }
 
         function validarTexto(numReto, respCorrecta, idAudio) {
@@ -324,10 +334,25 @@ Aquí pones el texto final más emotivo y bonito de todos para cerrar esta sorpr
             pinata.style.transform = 'scale(0.8)';
             setTimeout(() => pinata.style.transform = 'scale(1)', 100);
             document.getElementById('pinataText').innerText = "Resistencia: " + pinataGolpes + " golpes";
+            
             if(pinataGolpes <= 0) {
-                pasarDirecto(21, 22, 'music11');
+                // LLUVIA DE CORAZONES
+                for(var i = 0; i < 15; i++) {
+                    var heart = document.createElement('div');
+                    heart.className = 'heart-particle';
+                    heart.innerHTML = '💖';
+                    heart.style.left = (Math.random() * 80 + 10) + '%';
+                    heart.style.top = (Math.random() * 50 + 40) + '%';
+                    document.body.appendChild(heart);
+                    setTimeout(() => heart.remove(), 1500);
+                }
+                // TRANSICIÓN TRAS LOS CORAZONES
+                setTimeout(() => {
+                    pasarDirecto(21, 22, 'music11');
+                }, 1000);
             }
         }
     </script>
 </body>
-</html>
+            </html>
+            
