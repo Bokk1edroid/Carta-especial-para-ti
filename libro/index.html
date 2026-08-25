@@ -16,8 +16,8 @@
         button:active { transform: scale(0.95); }
         .card-img { width: 100%; border-radius: 12px; margin-bottom: 15px; border: 2px solid #d8b4fe; }
         
-        /* MODAL DE KUROMI CORREGIDO */
-        .kuromi-alert { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 9999; }
+        /* ESTILO DEL MODAL DE KUROMI */
+        .kuromi-alert { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 99999; }
         .kuromi-box { background: #1a0933; border: 2px solid #ff69b4; border-radius: 20px; padding: 20px; max-width: 300px; text-align: center; box-shadow: 0 0 20px #ff69b4; }
         .kuromi-box h2 { color: #ff69b4; font-size: 1.2rem; margin-top: 0; }
 
@@ -44,18 +44,10 @@
     <audio id="music11" src="musica11.mp3" preload="auto" loop></audio>
     <audio id="music12" src="musica12.mp3" preload="auto" loop></audio>
 
-    <div id="kuromiModal" class="kuromi-alert">
-        <div class="kuromi-box">
-            <h2>🖤 Kuromi dice:</h2>
-            <p style="text-align: center; color: #ffb3da;">"¡Nop! Esa no es la respuesta, ¡inténtalo de nuevo mi amor! 😈💜"</p>
-            <button onclick="cerrarKuromi()" style="background-color: #ff69b4;">Intentar otra vez ✨</button>
-        </div>
-    </div>
-
     <!-- RETO 1 -->
     <div id="p1" class="page active">
         <h1>Reto 1: Fecha Especial 🗝️</h1>
-        <p style="text-align: center;">¿Cuál es nuestra fecha especial? (Formato: DD-MM)</p>
+        <p style="text-align: center;">¿Cuál estuestra fecha especial? (Formato: DD-MM)</p>
         <input type="text" id="resp1" placeholder="DD-MM">
         <br><button onclick="validarTexto(1, '16-09', 'music1')">Abrir Carta 1 💌</button>
     </div>
@@ -253,14 +245,27 @@ Aquí pones el texto final más emotivo y bonito de todos para cerrar esta sorpr
             reproducir(idAudio);
         }
 
+        // FUNCIÓN QUE CREA EL MODAL DE KUROMI DINÁMICAMENTE
         function mostrarErrorKuromi() {
-            var modal = document.getElementById('kuromiModal');
-            modal.style.setProperty('display', 'flex', 'important');
+            if(document.getElementById('kuromiModal')) return; // Evita duplicados si hace clic rápido
+            
+            var modalHTML = `
+                <div id="kuromiModal" class="kuromi-alert">
+                    <div class="kuromi-box">
+                        <h2>🖤 Kuromi dice:</h2>
+                        <p style="text-align: center; color: #ffb3da;">"¡Nop! Esa no es la respuesta, ¡inténtalo de nuevo mi amor! 😈💜"</p>
+                        <button onclick="cerrarKuromi()" style="background-color: #ff69b4;">Intentar otra vez ✨</button>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
         }
 
         function cerrarKuromi() {
             var modal = document.getElementById('kuromiModal');
-            modal.style.setProperty('display', 'none', 'important');
+            if(modal) {
+                modal.remove();
+            }
         }
 
         function validarTexto(numReto, respCorrecta, idAudio) {
