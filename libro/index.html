@@ -21,26 +21,18 @@
         .kuromi-box { background: #1a0933; border: 2px solid #ff69b4; border-radius: 20px; padding: 20px; max-width: 300px; text-align: center; box-shadow: 0 0 20px #ff69b4; }
         .kuromi-box h2 { color: #ff69b4; font-size: 1.2rem; margin-top: 0; }
 
-        /* JUEGO DE MEMORIA - RETO 4 */
-        .memory-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 15px auto; max-width: 240px; }
-        .memory-card { background-color: #3b1d6e; border: 2px solid #d8b4fe; border-radius: 12px; height: 80px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 1.8rem; user-select: none; transition: 0.2s; }
-        .memory-card.flipped { background-color: #8a2be2; border-color: #ff69b4; }
+        /* ESTILOS RETO 5 (BURBUJAS) */
+        .bubble-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0; }
+        .bubble { background-color: #120924; border: 1px solid #8a2be2; border-radius: 50%; height: 55px; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; cursor: pointer; transition: 0.2s; user-select: none; }
+        .bubble.popped { opacity: 0.1; transform: scale(0.8); pointer-events: none; }
 
-        /* JUEGO DE BURBUJAS EN FORMA DE CORAZÓN - RETO 5 */
-        .heart-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-width: 260px; margin: 15px auto; }
-        .bubble { background-color: #3b1d6e; border: 2px solid #d8b4fe; border-radius: 50%; height: 45px; width: 45px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 1rem; transition: 0.2s; box-shadow: inset 0 0 8px rgba(216,180,254,0.5); user-select: none; margin: 0 auto; }
-        .bubble.popped { background-color: #8a2be2; border-color: #ff69b4; transform: scale(0.9); opacity: 0.8; }
-        .bubble.empty { visibility: hidden; pointer-events: none; }
+        /* ESTILOS RETO 6 (CUERDA) */
+        .rope-container { position: relative; height: 120px; background: #140826; border-radius: 12px; border: 1px dashed #8a2be2; margin: 15px 0; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+        .rope { width: 6px; height: 90px; background: #d8b4fe; position: absolute; transition: transform 0.2s; }
 
-        /* RETO 6: CUERDA */
-        .rope-container { display: flex; flex-direction: column; align-items: center; margin: 20px 0; cursor: pointer; }
-        .rope { width: 6px; height: 100px; background: #d8b4fe; border-radius: 3px; transition: height 0.2s ease; }
-        .rope-handle { font-size: 2rem; user-select: none; }
-
-        /* RETO 7: MANIJA / SLIDER DE RITMO */
-        .rhythm-container { margin: 20px 0; }
-        input[type=range] { width: 100%; accent-color: #ff69b4; cursor: pointer; }
-        .color-heart { font-size: 3.5rem; filter: grayscale(100%); transition: filter 0.3s ease, transform 0.2s; display: inline-block; }
+        /* ESTILOS RETO 7 (MANIJA / RITMO) */
+        .handle-box { font-size: 3rem; cursor: pointer; user-select: none; transition: transform 0.1s; display: inline-block; }
+        .color-heart { font-size: 3.5rem; filter: grayscale(100%); transition: filter 0.3s; display: inline-block; }
 
         .kuromi-game-area { height: 180px; position: relative; background: #140826; border-radius: 12px; border: 1px dashed #8a2be2; overflow: hidden; margin: 10px 0; }
         .target-kuromi { position: absolute; font-size: 1.8rem; cursor: pointer; user-select: none; }
@@ -62,7 +54,6 @@
 </head>
 <body>
 
-    <!-- CANCIONES DE FONDO -->
     <audio id="music1" src="musica1.mp3" preload="auto" loop></audio>
     <audio id="music2" src="musica2.mp3" preload="auto" loop></audio>
     <audio id="music3" src="musica3.mp3" preload="auto" loop></audio>
@@ -75,184 +66,153 @@
     <audio id="music10" src="musica10.mp3" preload="auto" loop></audio>
     <audio id="music11" src="musica11.mp3" preload="auto" loop></audio>
     <audio id="music12" src="musica12.mp3" preload="auto" loop></audio>
-
-    <!-- EFECTOS DE SONIDO (SFX) -->
-    <audio id="popSound" src="pop.mp3" preload="auto"></audio>
-    <audio id="ropeSound" src="rope.mp3" preload="auto"></audio>
-    <audio id="hitSound" src="hit.mp3" preload="auto"></audio>
+    
+    <!-- EFECTO DE SONIDO DE GOLPE PARA LA PIÑATA -->
+    <audio id="hitSound" src="golpe.mp3" preload="auto"></audio>
 
     <!-- RETO 1 -->
-    <div id="p1" class="page active">
+    <div id="reto1" class="page active">
         <h1>Reto 1: Fecha Especial 🗝️</h1>
         <p style="text-align: center;">¿Cuál es nuestra fecha especial? (Formato: DD-MM)</p>
         <input type="text" id="resp1" placeholder="DD-MM">
         <br><button onclick="validarTexto(1, '16-09', 'music1')">Abrir Carta 1 💌</button>
     </div>
-    <div id="p2" class="page">
+    <div id="carta1" class="page">
         <img src="foto1.jpg" alt="Carta 1" class="card-img">
         <h1>Carta 1: Nuestro Inicio 💜</h1>
         <p>Escribe aquí tu primera carta...</p>
-        <button onclick="siguiente(2, 3, 'music1')">Siguiente Reto ➔</button>
+        <button onclick="irPagina('reto2', 'music1')">Siguiente Reto ➔</button>
     </div>
 
     <!-- RETO 2 -->
-    <div id="p3" class="page">
+    <div id="reto2" class="page">
         <h1>Reto 2: Tu Detalle Favorito 🎀</h1>
         <p style="text-align: center;">¿Cuál ha sido tu detalle favorito mío hasta ahora?</p>
         <input type="text" id="resp2" placeholder="Escribe lo que sientas...">
         <br><button onclick="validarLibre(2, 'music2')">Abrir Carta 2 🔓</button>
     </div>
-    <div id="p4" class="page">
+    <div id="carta2" class="page">
         <img src="foto2.jpg" alt="Carta 2" class="card-img">
         <h1>Carta 2: Un Detalle de Amor 🖤</h1>
         <p>Escribe aquí tu segunda carta...</p>
-        <button onclick="siguiente(4, 5, 'music2')">Siguiente Reto ➔</button>
+        <button onclick="irPagina('reto3', 'music2')">Siguiente Reto ➔</button>
     </div>
-
-    <!-- RETO 3 -->
-    <div id="p5" class="page">
-        <h1>Reto 3: Letras Desordenadas 🎶</h1>
-        <p style="text-align: center;">Ordena estas letras para descubrir la canción que nos representa:<br><b style="color:#d8b4fe; font-size:1.1rem;">M - A - N - T - R - A</b></p>
+    
+    <!-- RETO 3 (MANTRA) -->
+    <div id="reto3" class="page">
+        <h1>Reto 3: Nuestra Canción 🎶</h1>
+        <p style="text-align: center;">Escribe el nombre de la canción que representa nuestra vibra actual:<br><b style="color:#d8b4fe; font-size:1.1rem;">M - A - N - T - R - A</b></p>
         <input type="text" id="resp3" placeholder="Nombre de la canción...">
         <br><button onclick="validarTexto(3, 'mantra', 'music3')">Abrir Carta 3 🔓</button>
     </div>
-    <div id="p6" class="page">
+    <div id="carta3" class="page">
         <img src="foto3.jpg" alt="Carta 3" class="card-img">
         <h1>Carta 3: Nuestra Melodía ✨</h1>
         <p>Escribe aquí tu tercera carta...</p>
-        <button onclick="siguiente(6, 7, 'music3')">Siguiente Reto ➔</button>
+        <button onclick="irPagina('reto4', 'music3')">Siguiente Reto ➔</button>
     </div>
 
     <!-- RETO 4 -->
-    <div id="p7" class="page">
-        <h1>Reto 4: Memoria de Nuestro Ship 🧠💜</h1>
-        <p style="text-align: center;">Encuentra las parejas de cartas para desbloquear la imagen y escribe el nombre del ship:</p>
-        <div class="memory-grid" id="memoryGrid">
-            <div class="memory-card" onclick="voltearCarta(this, '💜')">❓</div>
-            <div class="memory-card" onclick="voltearCarta(this, '🖤')">❓</div>
-            <div class="memory-card" onclick="voltearCarta(this, '💜')">❓</div>
-            <div class="memory-card" onclick="voltearCarta(this, '🖤')">❓</div>
-        </div>
-        <div id="shipInputArea" style="display: none; margin-top: 15px;">
-            <p style="text-align: center; font-size: 0.9rem; color: #ff69b4;">¡Memoria completada! Ahora escribe el nombre del ship:</p>
-            <input type="text" id="resp4" placeholder="Nombre del ship...">
-            <br><button onclick="validarShipReto4('music4')">Abrir Carta 4 🔓</button>
-        </div>
+    <div id="reto4" class="page">
+        <h1>Reto 4: Primera Llamada 📞</h1>
+        <p style="text-align: center;">¿En qué fecha hicimos nuestra primera llamada? (Formato: DD-MM)</p>
+        <input type="text" id="resp4" placeholder="DD-MM">
+        <br><button onclick="validarTexto(4, '15-08', 'music4')">Abrir Carta 4 🔓</button>
     </div>
-    <div id="p8" class="page">
+    <div id="carta4" class="page">
         <img src="foto4.jpg" alt="Carta 4" class="card-img">
-        <h1>Carta 4: Nuestro Ship 💜</h1>
+        <h1>Carta 4: Tu Voz 💜</h1>
         <p>Escribe aquí tu cuarta carta...</p>
-        <button onclick="siguiente(8, 9, 'music4')">Siguiente Reto ➔</button>
+        <button onclick="irPagina('reto5', 'music4')">Siguiente Reto ➔</button>
     </div>
 
     <!-- RETO 5 -->
-    <div id="p9" class="page">
+    <div id="reto5" class="page">
         <h1>Reto 5: Aplasta las Burbujas 🫧</h1>
-        <p style="text-align: center;">¡Revienta todas las burbujas del corazón para revelar la imagen!</p>
-        <p id="bubbleCount" style="text-align: center; color: #ff69b4; margin: 5px 0;">Restantes: 13</p>
-        <div class="heart-grid" id="bubbleGrid">
-            <div class="bubble empty"></div>
+        <p style="text-align: center;">¡Revienta todas las burbujas para despejar y revelar la imagen oculta!</p>
+        <p id="bubbleCount" style="text-align: center; color: #ff69b4; margin: 5px 0;">Restantes: 8</p>
+        <div class="bubble-grid" id="bubbleGrid">
             <div class="bubble" onclick="reventarBurbuja(this)">💜</div>
-            <div class="bubble empty"></div>
-            <div class="bubble" onclick="reventarBurbuja(this)">💜</div>
-            <div class="bubble empty"></div>
-            <div class="bubble" onclick="reventarBurbuja(this)">🖤</div>
-            <div class="bubble" onclick="reventarBurbuja(this)">🖤</div>
-            <div class="bubble" onclick="reventarBurbuja(this)">🖤</div>
-            <div class="bubble" onclick="reventarBurbuja(this)">🖤</div>
             <div class="bubble" onclick="reventarBurbuja(this)">🖤</div>
             <div class="bubble" onclick="reventarBurbuja(this)">✨</div>
-            <div class="bubble" onclick="reventarBurbuja(this)">✨</div>
-            <div class="bubble" onclick="reventarBurbuja(this)">✨</div>
-            <div class="bubble" onclick="reventarBurbuja(this)">✨</div>
-            <div class="bubble" onclick="reventarBurbuja(this)">✨</div>
-            <div class="bubble empty"></div>
             <div class="bubble" onclick="reventarBurbuja(this)">💜</div>
-            <div class="bubble" onclick="reventarBurbuja(this)">💜</div>
-            <div class="bubble" onclick="reventarBurbuja(this)">💜</div>
-            <div class="bubble empty"></div>
-            <div class="bubble empty"></div>
-            <div class="bubble empty"></div>
             <div class="bubble" onclick="reventarBurbuja(this)">🖤</div>
-            <div class="bubble empty"></div>
-            <div class="bubble empty"></div>
+            <div class="bubble" onclick="reventarBurbuja(this)">✨</div>
+            <div class="bubble" onclick="reventarBurbuja(this)">💜</div>
+            <div class="bubble" onclick="reventarBurbuja(this)">🖤</div>
         </div>
     </div>
-    <div id="p10" class="page">
+    <div id="carta5" class="page">
         <img src="foto5.jpg" alt="Carta 5" class="card-img">
         <h1>Carta 5: Palabras Dulces 🖤</h1>
         <p>Escribe aquí tu quinta carta...</p>
-        <button onclick="siguiente(10, 11, 'music5')">Siguiente Reto ➔</button>
+        <button onclick="irPagina('reto6', 'music5')">Siguiente Reto ➔</button>
     </div>
 
-    <!-- RETO 6: CUERDA -->
-    <div id="p11" class="page">
-        <h1>Reto 6: Tira de la Cuerda Mágica 🧶</h1>
-        <p style="text-align: center;">Mantén presionado o arrastra hacia abajo la cuerda para hacer salir el corazón oculto:</p>
-        <div class="rope-container" onmousedown="tirarCuerda()" ontouchstart="tirarCuerda()">
-            <div class="rope" id="ropeElem"></div>
-            <div class="rope-handle">🧵⬇️</div>
+    <!-- RETO 6 (CUERDA) -->
+    <div id="reto6" class="page">
+        <h1>Reto 6: Toca la Cuerda Mágica 🎸</h1>
+        <p style="text-align: center;">Arrastra o presiona la cuerda varias veces para liberar el corazón oculto:</p>
+        <div class="rope-container" onclick="tirarCuerda()">
+            <div id="ropeElem" class="rope"></div>
         </div>
-        <p id="ropeText" style="text-align: center; color: #ff69b4; font-size: 0.9rem;">¡Tira de la cuerda!</p>
+        <p id="ropeText" style="text-align: center; color: #ff69b4;">Tirones: 0/5</p>
     </div>
-    <div id="p12" class="page">
+    <div id="carta6" class="page">
         <img src="foto6.jpg" alt="Carta 6" class="card-img">
         <h1>Carta 6: Mi Red de Amor 💌</h1>
         <p>Escribe aquí tu sexta carta...</p>
-        <button onclick="siguiente(12, 13, 'music6')">Siguiente Reto ➔</button>
+        <button onclick="irPagina('reto7', 'music6')">Siguiente Reto ➔</button>
     </div>
 
-    <!-- RETO 7: MANIJA / SLIDER DE RITMO -->
-    <div id="p13" class="page">
-        <h1>Reto 7: Sintoniza el Ritmo 🎛️</h1>
-        <p style="text-align: center;">Gira o desliza la manija para encontrar el punto exacto de la canción y llenar de color el corazón:</p>
-        <div class="rhythm-container">
-            <div id="colorHeart" class="color-heart">💖</div>
-            <br><br>
-            <input type="range" id="rhythmSlider" min="0" max="100" value="0" oninput="ajustarRitmo(this.value)">
+    <!-- RETO 7 (MANIJA Y RITMO) -->
+    <div id="reto7" class="page">
+        <h1>Reto 7: Gira la Manija del Ritmo 🎛️</h1>
+        <p style="text-align: center;">Haz clic repetidamente en la manija para girarla al ritmo y llenar de color el corazón:</p>
+        <div style="margin: 15px 0;">
+            <div id="colorHeart" class="color-heart">💖</div><br>
+            <div id="handleBox" class="handle-box" onclick="girarManija()">🔄</div>
         </div>
-        <p id="rhythmHint" style="text-align: center; color: #d8b4fe; font-size: 0.9rem;">Busca el punto exacto (cerca del 80%)...</p>
+        <p id="handleText" style="text-align: center; color: #d8b4fe;">Progreso: 0%</p>
     </div>
-    <div id="p14" class="page">
+    <div id="carta7" class="page">
         <img src="foto7.jpg" alt="Carta 7" class="card-img">
         <h1>Carta 7: El Ritmo de Mi Corazón 💜</h1>
         <p>Escribe aquí tu séptima carta...</p>
-        <button onclick="siguiente(14, 15, 'music7')">Siguiente Reto ➔</button>
+        <button onclick="irPagina('reto8', 'music7')">Siguiente Reto ➔</button>
     </div>
 
-    <!-- RETO 8: CÓDIGO DE EMOJIS -->
-    <div id="p15" class="page">
-        <h1>Reto 8: Código Secreto 🧩</h1>
-        <p style="text-align: center;">Descifra la combinación de nuestros símbolos:<br><b style="color:#ff69b4; font-size: 1.4rem;">🖤 + 💜 = ?</b></p>
-        <p style="text-align: center; font-size: 0.85rem; color:#d8b4fe;">Escribe qué palabra o sentimiento nos define juntos:</p>
-        <input type="text" id="resp8" placeholder="Tu respuesta...">
+    <!-- RETO 8 -->
+    <div id="reto8" class="page">
+        <h1>Reto 8: Nuestra Conexión 🧩</h1>
+        <p style="text-align: center;">¿Cuál es una de las cosas que más nos gusta hacer juntas?</p>
+        <input type="text" id="resp8" placeholder="Escribe tu respuesta...">
         <br><button onclick="validarLibre(8, 'music8')">Abrir Carta 8 🔓</button>
     </div>
-    <div id="p16" class="page">
+    <div id="carta8" class="page">
         <img src="foto8.jpg" alt="Carta 8" class="card-img">
-        <h1>Carta 8: Como Me Llamas 🖤</h1>
+        <h1>Carta 8: Momentos Juntas 🖤</h1>
         <p>Escribe aquí tu octava carta...</p>
-        <button onclick="siguiente(16, 17, 'music8')">Siguiente Reto ➔</button>
+        <button onclick="irPagina('reto9', 'music8')">Siguiente Reto ➔</button>
     </div>
 
     <!-- RETO 9 -->
-    <div id="p17" class="page">
+    <div id="reto9" class="page">
         <h1>Reto 9: Nuestros Ships Favoritos 🔮</h1>
         <p style="text-align: center;">Pistas:<br>✨ <i>Tailandés | The Owl House | K-Pop ENHYPEN</i></p>
         <p style="text-align: center;">Escribe uno de nuestros ships favoritos:</p>
         <input type="text" id="resp9" placeholder="Escribe el ship...">
         <br><button onclick="validarShip('music9')">Abrir Carta 9 🔓</button>
     </div>
-    <div id="p18" class="page">
+    <div id="carta9" class="page">
         <img src="foto9.jpg" alt="Carta 9" class="card-img">
         <h1>Carta 9: Nuestras Historias 💜</h1>
         <p>Escribe aquí tu novena carta...</p>
-        <button onclick="siguiente(18, 19, 'music9')">Siguiente Reto ➔</button>
+        <button onclick="irPagina('reto10', 'music9')">Siguiente Reto ➔</button>
     </div>
 
     <!-- RETO 10 -->
-    <div id="p19" class="page">
+    <div id="reto10" class="page">
         <h1>Reto 10: Atrapa las Kuromis 😈</h1>
         <p style="text-align: center;">¡Atrapa a las 5 Kuromis traviesas en pantalla!</p>
         <p id="kuromiCount" style="text-align: center; color: #ff69b4;">Atrapadas: 0/5</p>
@@ -260,35 +220,35 @@
             <span class="target-kuromi" id="kuromiTarget" onclick="atraparKuromi()">😈</span>
         </div>
     </div>
-    <div id="p20" class="page">
+    <div id="carta10" class="page">
         <img src="foto10.jpg" alt="Carta 10" class="card-img">
         <h1>Carta 10: Travesuras Juntas 💖</h1>
         <p>Escribe aquí tu décima carta...</p>
-        <button onclick="siguiente(20, 21, 'music10')">Siguiente Reto ➔</button>
+        <button onclick="irPagina('reto11', 'music10')">Siguiente Reto ➔</button>
     </div>
 
-    <!-- RETO 11: PIÑATA CON EFECTO DE SONIDO DE GOLPE -->
-    <div id="p21" class="page">
+    <!-- RETO 11 (PIÑATA CON SONIDO) -->
+    <div id="reto11" class="page">
         <h1>Reto 11: La Piñata Corazón 🪅</h1>
-        <p style="text-align: center;">Toca la piñata para golpearla y romperla:</p>
+        <p style="text-align: center;">Toca la piñata 3 veces para romperla (¡escucha el golpe!):</p>
         <div id="pinata" class="pinata" onclick="golpearPinata()">💜</div>
         <p id="pinataText" style="text-align: center; color: #d8b4fe;">Resistencia: 3 golpes</p>
     </div>
-    <div id="p22" class="page">
+    <div id="carta11" class="page">
         <img src="foto11.jpg" alt="Carta 11" class="card-img">
         <h1>Carta 11: Sorpresa Final ✨</h1>
         <p>Escribe aquí tu onceava carta...</p>
-        <button onclick="siguiente(22, 23, 'music11')">Último Desafío ➔</button>
+        <button onclick="irPagina('reto12', 'music11')">Último Desafío ➔</button>
     </div>
 
     <!-- RETO 12 -->
-    <div id="p23" class="page">
+    <div id="reto12" class="page">
         <h1>Reto 12: La Clave Final 👑</h1>
         <p style="text-align: center;">Escribe las palabras mágicas para abrir tu gran carta de regalo:</p>
         <input type="text" id="resp12" placeholder="Escribe aquí...">
         <br><button onclick="validarTexto(12, 'te amo', 'music12')">Abrir Gran Carta Final 💌</button>
     </div>
-    <div id="p24" class="page">
+    <div id="carta12" class="page">
         <img src="foto12.jpg" alt="Carta Final" class="card-img">
         <h1>Carta 12: Mi Regalo del 16 de Septiembre 💜🖤</h1>
         <p>¡Lo lograste mi vida! Resolviste todos los acertijos de nuestro libro.
@@ -300,29 +260,28 @@ Aquí pones el texto final más emotivo y bonito de todos para cerrar esta sorpr
     <script>
         var kuromiContador = 0;
         var pinataGolpes = 3;
-        var burbujasRestantes = 13;
-
-        // Variables del Memorama
-        var primeraCarta = null;
-        var segundaCarta = null;
-        var bloqueoTablero = false;
-        var parejasEncontradas = 0;
+        var burbujasRestantes = 8;
+        var tironesCuerda = 0;
+        var progresoManija = 0;
 
         function reproducir(idAudio) {
-            document.querySelectorAll('audio:not(#popSound):not(#ropeSound):not(#hitSound)').forEach(a => { a.pause(); a.currentTime = 0; });
+            document.querySelectorAll('audio').forEach(a => { if(a.id !== 'hitSound') { a.pause(); a.currentTime = 0; } });
             var audio = document.getElementById(idAudio);
             if(audio) audio.play().catch(e => console.log(e));
         }
 
-        function siguiente(ocultarNum, mostrarNum, audioPausar) {
-            document.getElementById('p' + ocultarNum).classList.remove('active');
-            document.getElementById('p' + mostrarNum).classList.add('active');
-            if(audioPausar) document.getElementById(audioPausar).pause();
+        function cambiarVista(actualId, siguienteId, idAudio) {
+            document.getElementById(actualId).classList.remove('active');
+            document.getElementById(siguienteId).classList.add('active');
+            if(idAudio) reproducir(idAudio);
         }
 
-        function pasarDirecto(ocultarNum, mostrarNum, idAudio) {
-            siguiente(ocultarNum, mostrarNum);
-            reproducir(idAudio);
+        function irPagina(siguienteId, audioPausar) {
+            // Encontrar la página actual activa
+            var activa = document.querySelector('.page.active');
+            if(activa) activa.classList.remove('active');
+            document.getElementById(siguienteId).classList.add('active');
+            if(audioPausar) document.getElementById(audioPausar).pause();
         }
 
         function mostrarErrorKuromi() {
@@ -347,8 +306,7 @@ Aquí pones el texto final más emotivo y bonito de todos para cerrar esta sorpr
         function validarTexto(numReto, respCorrecta, idAudio) {
             var val = document.getElementById('resp' + numReto).value.toLowerCase().trim();
             if(val === respCorrecta.toLowerCase()) {
-                siguiente((numReto * 2) - 1, numReto * 2);
-                reproducir(idAudio);
+                cambiarVista('reto' + numReto, 'carta' + numReto, idAudio);
             } else {
                 mostrarErrorKuromi();
             }
@@ -357,8 +315,7 @@ Aquí pones el texto final más emotivo y bonito de todos para cerrar esta sorpr
         function validarLibre(numReto, idAudio) {
             var val = document.getElementById('resp' + numReto).value.trim();
             if(val.length > 0) {
-                siguiente((numReto * 2) - 1, numReto * 2);
-                reproducir(idAudio);
+                cambiarVista('reto' + numReto, 'carta' + numReto, idAudio);
             } else {
                 mostrarErrorKuromi();
             }
@@ -367,11 +324,74 @@ Aquí pones el texto final más emotivo y bonito de todos para cerrar esta sorpr
         function validarShip(idAudio) {
             var val = document.getElementById('resp9').value.toLowerCase().trim();
             if(val.includes('duangqin') || val.includes('lumity') || val.includes('sunsun')) {
-                siguiente(17, 18);
-                reproducir(idAudio);
+                cambiarVista('reto9', 'carta9', idAudio);
             } else {
                 mostrarErrorKuromi();
             }
         }
 
-     
+        function reventarBurbuja(elemento) {
+            if (!elemento.classList.contains('popped')) {
+                elemento.classList.add('popped');
+                burbujasRestantes--;
+                document.getElementById('bubbleCount').innerText = "Restantes: " + burbujasRestantes;
+                if (burbujasRestantes <= 0) {
+                    setTimeout(() => {
+                        cambiarVista('reto5', 'carta5', 'music5');
+                    }, 400);
+                }
+            }
+        }
+
+        // LÓGICA RETO 6: CUERDA
+        function tirarCuerda() {
+            tironesCuerda++;
+            var rope = document.getElementById('ropeElem');
+            rope.style.transform = "translateY(" + (tironesCuerda * 5) + "px) scaleY(0.9)";
+            setTimeout(() => rope.style.transform = "translateY(0) scaleY(1)", 150);
+            document.getElementById('ropeText').innerText = "Tirones: " + tironesCuerda + "/5";
+            
+            if(tironesCuerda >= 5) {
+                setTimeout(() => {
+                    cambiarVista('reto6', 'carta6', 'music6');
+                }, 400);
+            }
+        }
+
+        // LÓGICA RETO 7: MANIJA Y RITMO
+        function girarManija() {
+            progresoManija += 20;
+            var handle = document.getElementById('handleBox');
+            handle.style.transform = "rotate(" + (progresoManija * 3.6) + "deg)";
+            
+            var porcentajeGrayscale = Math.max(0, 100 - (progresoManija * 1));
+            document.getElementById('colorHeart').style.filter = "grayscale(" + porcentajeGrayscale + "%)";
+            document.getElementById('handleText').innerText = "Progreso: " + Math.min(100, progresoManija) + "%";
+
+            if(progresoManija >= 100) {
+                setTimeout(() => {
+                    cambiarVista('reto7', 'carta7', 'music7');
+                }, 400);
+            }
+        }
+
+        function atraparKuromi() {
+            kuromiContador++;
+            document.getElementById('kuromiCount').innerText = "Atrapadas: " + kuromiContador + "/5";
+            if(kuromiContador >= 5) {
+                cambiarVista('reto10', 'carta10', 'music10');
+            } else {
+                var target = document.getElementById('kuromiTarget');
+                target.style.top = Math.floor(Math.random() * 130) + 'px';
+                target.style.left = Math.floor(Math.random() * 250) + 'px';
+            }
+        }
+
+        // LÓGICA RETO 11: PIÑATA CON SONIDO
+        function golpearPinata() {
+            pinataGolpes--;
+            var pinata = document.getElementById('pinata');
+            pinata.style.transform = 'scale(0.8)';
+            setTimeout(() => pinata.style.transform = 'scale(1)', 100);
+            
+            var hit = document.getElementById('hitSound'
