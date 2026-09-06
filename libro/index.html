@@ -32,12 +32,12 @@
         .bubble.popped { background-color: #8a2be2; border-color: #ff69b4; transform: scale(0.9); opacity: 0.8; }
         .bubble.empty { visibility: hidden; pointer-events: none; }
 
-        /* NUEVO RETO 6: CUERDA */
+        /* RETO 6: CUERDA */
         .rope-container { display: flex; flex-direction: column; align-items: center; margin: 20px 0; cursor: pointer; }
         .rope { width: 6px; height: 100px; background: #d8b4fe; border-radius: 3px; transition: height 0.2s ease; }
         .rope-handle { font-size: 2rem; user-select: none; }
 
-        /* NUEVO RETO 7: MANIJA / SLIDER DE RITMO */
+        /* RETO 7: MANIJA / SLIDER DE RITMO */
         .rhythm-container { margin: 20px 0; }
         input[type=range] { width: 100%; accent-color: #ff69b4; cursor: pointer; }
         .color-heart { font-size: 3.5rem; filter: grayscale(100%); transition: filter 0.3s ease, transform 0.2s; display: inline-block; }
@@ -186,7 +186,7 @@
         <button onclick="siguiente(10, 11, 'music5')">Siguiente Reto ➔</button>
     </div>
 
-    <!-- NUEVO RETO 6: TIRA DE LA CUERDA -->
+    <!-- RETO 6: CUERDA -->
     <div id="p11" class="page">
         <h1>Reto 6: Tira de la Cuerda Mágica 🧶</h1>
         <p style="text-align: center;">Mantén presionado o arrastra hacia abajo la cuerda para hacer salir el corazón oculto:</p>
@@ -203,7 +203,7 @@
         <button onclick="siguiente(12, 13, 'music6')">Siguiente Reto ➔</button>
     </div>
 
-    <!-- NUEVO RETO 7: MANIJA Y RITMO DE COLOR -->
+    <!-- RETO 7: MANIJA / SLIDER DE RITMO -->
     <div id="p13" class="page">
         <h1>Reto 7: Sintoniza el Ritmo 🎛️</h1>
         <p style="text-align: center;">Gira o desliza la manija para encontrar el punto exacto de la canción y llenar de color el corazón:</p>
@@ -221,7 +221,7 @@
         <button onclick="siguiente(14, 15, 'music7')">Siguiente Reto ➔</button>
     </div>
 
-    <!-- NUEVO RETO 8: CÓDIGO DE EMOJIS -->
+    <!-- RETO 8: CÓDIGO DE EMOJIS -->
     <div id="p15" class="page">
         <h1>Reto 8: Código Secreto 🧩</h1>
         <p style="text-align: center;">Descifra la combinación de nuestros símbolos:<br><b style="color:#ff69b4; font-size: 1.4rem;">🖤 + 💜 = ?</b></p>
@@ -370,4 +370,8 @@ Aquí pones el texto final más emotivo y bonito de todos para cerrar esta sorpr
                 siguiente(17, 18);
                 reproducir(idAudio);
             } else {
-                mostrarError
+                mostrarErrorKuromi();
+            }
+        }
+
+     
