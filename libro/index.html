@@ -38,7 +38,6 @@
         .target-kuromi { position: absolute; font-size: 1.8rem; cursor: pointer; user-select: none; }
         .pinata { font-size: 4rem; cursor: pointer; user-select: none; transition: transform 0.1s; }
 
-        /* LLUVIA DE CORAZONES PIÑATA */
         @keyframes floatUp {
             0% { transform: translateY(0) scale(0.5); opacity: 1; }
             100% { transform: translateY(-300px) scale(1.5); opacity: 0; }
@@ -66,8 +65,6 @@
     <audio id="music10" src="musica10.mp3" preload="auto" loop></audio>
     <audio id="music11" src="musica11.mp3" preload="auto" loop></audio>
     <audio id="music12" src="musica12.mp3" preload="auto" loop></audio>
-    
-    <!-- EFECTO DE SONIDO DE GOLPE PARA LA PIÑATA -->
     <audio id="hitSound" src="golpe.mp3" preload="auto"></audio>
 
     <!-- RETO 1 -->
@@ -75,7 +72,7 @@
         <h1>Reto 1: Fecha Especial 🗝️</h1>
         <p style="text-align: center;">¿Cuál es nuestra fecha especial? (Formato: DD-MM)</p>
         <input type="text" id="resp1" placeholder="DD-MM">
-        <br><button onclick="validarTexto(1, '16-09', 'music1')">Abrir Carta 1 💌</button>
+        <br><button onclick="validarTexto(1, '16-09', 'carta1', 'music1')">Abrir Carta 1 💌</button>
     </div>
     <div id="carta1" class="page">
         <img src="foto1.jpg" alt="Carta 1" class="card-img">
@@ -89,7 +86,7 @@
         <h1>Reto 2: Tu Detalle Favorito 🎀</h1>
         <p style="text-align: center;">¿Cuál ha sido tu detalle favorito mío hasta ahora?</p>
         <input type="text" id="resp2" placeholder="Escribe lo que sientas...">
-        <br><button onclick="validarLibre(2, 'music2')">Abrir Carta 2 🔓</button>
+        <br><button onclick="validarLibre(2, 'carta2', 'music2')">Abrir Carta 2 🔓</button>
     </div>
     <div id="carta2" class="page">
         <img src="foto2.jpg" alt="Carta 2" class="card-img">
@@ -103,7 +100,7 @@
         <h1>Reto 3: Nuestra Canción 🎶</h1>
         <p style="text-align: center;">Escribe el nombre de la canción que representa nuestra vibra actual:<br><b style="color:#d8b4fe; font-size:1.1rem;">M - A - N - T - R - A</b></p>
         <input type="text" id="resp3" placeholder="Nombre de la canción...">
-        <br><button onclick="validarTexto(3, 'mantra', 'music3')">Abrir Carta 3 🔓</button>
+        <br><button onclick="validarTexto(3, 'mantra', 'carta3', 'music3')">Abrir Carta 3 🔓</button>
     </div>
     <div id="carta3" class="page">
         <img src="foto3.jpg" alt="Carta 3" class="card-img">
@@ -117,7 +114,7 @@
         <h1>Reto 4: Primera Llamada 📞</h1>
         <p style="text-align: center;">¿En qué fecha hicimos nuestra primera llamada? (Formato: DD-MM)</p>
         <input type="text" id="resp4" placeholder="DD-MM">
-        <br><button onclick="validarTexto(4, '15-08', 'music4')">Abrir Carta 4 🔓</button>
+        <br><button onclick="validarTexto(4, '15-08', 'carta4', 'music4')">Abrir Carta 4 🔓</button>
     </div>
     <div id="carta4" class="page">
         <img src="foto4.jpg" alt="Carta 4" class="card-img">
@@ -187,7 +184,7 @@
         <h1>Reto 8: Nuestra Conexión 🧩</h1>
         <p style="text-align: center;">¿Cuál es una de las cosas que más nos gusta hacer juntas?</p>
         <input type="text" id="resp8" placeholder="Escribe tu respuesta...">
-        <br><button onclick="validarLibre(8, 'music8')">Abrir Carta 8 🔓</button>
+        <br><button onclick="validarLibre(8, 'carta8', 'music8')">Abrir Carta 8 🔓</button>
     </div>
     <div id="carta8" class="page">
         <img src="foto8.jpg" alt="Carta 8" class="card-img">
@@ -227,7 +224,7 @@
         <button onclick="irPagina('reto11', 'music10')">Siguiente Reto ➔</button>
     </div>
 
-    <!-- RETO 11 (PIÑATA CON SONIDO) -->
+    <!-- RETO 11 -->
     <div id="reto11" class="page">
         <h1>Reto 11: La Piñata Corazón 🪅</h1>
         <p style="text-align: center;">Toca la piñata 3 veces para romperla (¡escucha el golpe!):</p>
@@ -246,7 +243,7 @@
         <h1>Reto 12: La Clave Final 👑</h1>
         <p style="text-align: center;">Escribe las palabras mágicas para abrir tu gran carta de regalo:</p>
         <input type="text" id="resp12" placeholder="Escribe aquí...">
-        <br><button onclick="validarTexto(12, 'te amo', 'music12')">Abrir Gran Carta Final 💌</button>
+        <br><button onclick="validarTexto(12, 'te amo', 'carta12', 'music12')">Abrir Gran Carta Final 💌</button>
     </div>
     <div id="carta12" class="page">
         <img src="foto12.jpg" alt="Carta Final" class="card-img">
@@ -270,18 +267,14 @@ Aquí pones el texto final más emotivo y bonito de todos para cerrar esta sorpr
             if(audio) audio.play().catch(e => console.log(e));
         }
 
-        function cambiarVista(actualId, siguienteId, idAudio) {
-            document.getElementById(actualId).classList.remove('active');
-            document.getElementById(siguienteId).classList.add('active');
-            if(idAudio) reproducir(idAudio);
-        }
-
         function irPagina(siguienteId, audioPausar) {
-            // Encontrar la página actual activa
             var activa = document.querySelector('.page.active');
             if(activa) activa.classList.remove('active');
             document.getElementById(siguienteId).classList.add('active');
-            if(audioPausar) document.getElementById(audioPausar).pause();
+            if(audioPausar) {
+                var aud = document.getElementById(audioPausar);
+                if(aud) aud.pause();
+            }
         }
 
         function mostrarErrorKuromi() {
@@ -303,19 +296,27 @@ Aquí pones el texto final más emotivo y bonito de todos para cerrar esta sorpr
             if(modal) { modal.remove(); }
         }
 
-        function validarTexto(numReto, respCorrecta, idAudio) {
-            var val = document.getElementById('resp' + numReto).value.toLowerCase().trim();
+        function validarTexto(numReto, respCorrecta, idCarta, idAudio) {
+            var inputElem = document.getElementById('resp' + numReto);
+            if (!inputElem) return;
+            var val = inputElem.value.toLowerCase().trim();
+            
             if(val === respCorrecta.toLowerCase()) {
-                cambiarVista('reto' + numReto, 'carta' + numReto, idAudio);
+                irPagina(idCarta, null);
+                reproducir(idAudio);
             } else {
                 mostrarErrorKuromi();
             }
         }
 
-        function validarLibre(numReto, idAudio) {
-            var val = document.getElementById('resp' + numReto).value.trim();
+        function validarLibre(numReto, idCarta, idAudio) {
+            var inputElem = document.getElementById('resp' + numReto);
+            if (!inputElem) return;
+            var val = inputElem.value.trim();
+            
             if(val.length > 0) {
-                cambiarVista('reto' + numReto, 'carta' + numReto, idAudio);
+                irPagina(idCarta, null);
+                reproducir(idAudio);
             } else {
                 mostrarErrorKuromi();
             }
@@ -324,7 +325,8 @@ Aquí pones el texto final más emotivo y bonito de todos para cerrar esta sorpr
         function validarShip(idAudio) {
             var val = document.getElementById('resp9').value.toLowerCase().trim();
             if(val.includes('duangqin') || val.includes('lumity') || val.includes('sunsun')) {
-                cambiarVista('reto9', 'carta9', idAudio);
+                irPagina('carta9', null);
+                reproducir(idAudio);
             } else {
                 mostrarErrorKuromi();
             }
@@ -337,13 +339,13 @@ Aquí pones el texto final más emotivo y bonito de todos para cerrar esta sorpr
                 document.getElementById('bubbleCount').innerText = "Restantes: " + burbujasRestantes;
                 if (burbujasRestantes <= 0) {
                     setTimeout(() => {
-                        cambiarVista('reto5', 'carta5', 'music5');
+                        irPagina('carta5', null);
+                        reproducir('music5');
                     }, 400);
                 }
             }
         }
 
-        // LÓGICA RETO 6: CUERDA
         function tirarCuerda() {
             tironesCuerda++;
             var rope = document.getElementById('ropeElem');
@@ -353,12 +355,12 @@ Aquí pones el texto final más emotivo y bonito de todos para cerrar esta sorpr
             
             if(tironesCuerda >= 5) {
                 setTimeout(() => {
-                    cambiarVista('reto6', 'carta6', 'music6');
+                    irPagina('carta6', null);
+                    reproducir('music6');
                 }, 400);
             }
         }
 
-        // LÓGICA RETO 7: MANIJA Y RITMO
         function girarManija() {
             progresoManija += 20;
             var handle = document.getElementById('handleBox');
@@ -370,7 +372,8 @@ Aquí pones el texto final más emotivo y bonito de todos para cerrar esta sorpr
 
             if(progresoManija >= 100) {
                 setTimeout(() => {
-                    cambiarVista('reto7', 'carta7', 'music7');
+                    irPagina('carta7', null);
+                    reproducir('music7');
                 }, 400);
             }
         }
@@ -379,7 +382,8 @@ Aquí pones el texto final más emotivo y bonito de todos para cerrar esta sorpr
             kuromiContador++;
             document.getElementById('kuromiCount').innerText = "Atrapadas: " + kuromiContador + "/5";
             if(kuromiContador >= 5) {
-                cambiarVista('reto10', 'carta10', 'music10');
+                irPagina('carta10', null);
+                reproducir('music10');
             } else {
                 var target = document.getElementById('kuromiTarget');
                 target.style.top = Math.floor(Math.random() * 130) + 'px';
@@ -387,11 +391,13 @@ Aquí pones el texto final más emotivo y bonito de todos para cerrar esta sorpr
             }
         }
 
-        // LÓGICA RETO 11: PIÑATA CON SONIDO
         function golpearPinata() {
             pinataGolpes--;
             var pinata = document.getElementById('pinata');
             pinata.style.transform = 'scale(0.8)';
             setTimeout(() => pinata.style.transform = 'scale(1)', 100);
             
-            var hit = document.getElementById('hitSound'
+            var hit = document.getElementById('hitSound');
+            if(hit) { hit.currentTime = 0; hit.play().catch(e => console.log(e)); }
+
+            docume
